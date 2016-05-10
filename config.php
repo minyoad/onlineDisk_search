@@ -18,9 +18,11 @@ $limit = 12; //首页磨盘随机推荐的数量
 
 $num = 10; //每页显示的搜索结果数
 
-$apimode=true; //是否使用谷歌搜索API，国内空间推荐使用
+$apimode=false; //是否使用谷歌搜索API，国内空间推荐使用
 
-$googleip = "http://64.233.167.163"; //Google IP地址，$apimode为false时有效
+//$googleip = "http://64.233.167.163"; //Google IP地址，$apimode为false时有效
+
+$googleip="https://g.jikewenku.cn";
 /*备用Google IP
 http://61.19.1.110
 http://64.233.167.163

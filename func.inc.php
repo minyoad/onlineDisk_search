@@ -93,19 +93,33 @@ if($site)
 $url = $googleip."/search?sa=N&newwindow=1&safe=off&q={$kw}&num={$num}&start={$start}&sitesearch={$site}";
 else $url = $googleip."/search?sa=N&newwindow=1&safe=off&q={$kw}&num={$num}&start={$start}";
 
-$surl = 'http://www.google.com.hk/';
+//echo $url;
+
+$surl = 'https://www.google.com.hk/';
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_REFERER, $surl);
 curl_setopt($ch, CURLOPT_USERAGENT, 'MQQBrowser/Mini3.1 (Nokia3050/MIDP2.0)');
+
+curl_setopt($ch,CURLOPT_PROXYTYPE,CURLPROXY_SOCKS5);//使用了SOCKS5代理
+curl_setopt($ch, CURLOPT_PROXY, "127.0.0.1:6600");
+
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // 信任任何证书  
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 1); // 检查证书中是否设置域名  
+
 curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array("Accept-Language:zh-cn,zh"));
+//curl_setopt($ch, CURLOPT_HTTPHEADER, array("Accept-Language:zh-cn,zh"));
 curl_setopt($ch, CURLOPT_MAXREDIRS, 1);
 //curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 curl_setopt($ch, CURLOPT_AUTOREFERER, 1);
 $contents = curl_exec($ch);
+
+//var_dump(curl_error($ch));  //查看报错信息 
 curl_close($ch);
+
+var_dump($contents);
+
 $html = $contents;
 $html = mb_convert_encoding( $html, 'utf-8','gbk' );
 $p = "|<div id=\"universal\">(.*?)</div><div id=\"navbar\"|ims";
@@ -124,7 +138,18 @@ if(preg_match($p,$html,$out)){
 				$url = $o_out[2];
 				//$url = urldecode($url);
 				$op['title'] = $o_out[3];
+				print_r($url);
+				$url=str_replace('http://googleweblight.com/%3Flite_url%3D','',$url);
+				if ($i=strpos($url,'%26'))
+				{
+					$url=sub_str($url,0,$i);
+				}
+				
 				$op['url'] = $url;
+				
+				//$op['url'] = preg_replace('/^http:\S*=(http\S*)&\S*?/i','$1',$url);
+				//var_dump(parse_url($url));
+				
 				$op['site'] = str_replace('&nbsp;<img src="//www.gstatic.com/m/images/phone.gif" width="7" height="14" alt=""/>','',$o_out[5]);
 				$op['description'] = $o_out[4];
 			}

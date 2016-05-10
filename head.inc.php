@@ -93,8 +93,8 @@ padding: 5px 0px; border: 1px solid #C3C3C3; background: #FFF url(/images/input_
 .site{color:green;}
 </style>
 <STYLE type=text/css>
-A{cursor:url('http://qisou.aliapp.com/mouse/JZWL-2.cur'), url(http://qisou.aliapp.com/mouse/JZWL-2.cur), auto;}
-BODY{cursor:url('http://qisou.aliapp.com/mouse/JZWL-1.cur'), url(http://qisou.aliapp.com/mouse/JZWL-1.cur), auto;}
+A{cursor:url('mouse/JZWL-2.cur'), url(mouse/JZWL-2.cur), auto;}
+BODY{cursor:url('mouse/JZWL-1.cur'), url(mouse/JZWL-1.cur), auto;}
 </STYLE>
 </head>
 <body>
